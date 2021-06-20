@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!--Fontawsome-->
+    <script src="https://kit.fontawesome.com/718e44ec37.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <!--Custom style css-->
+    <link rel="stylesheet" href="../public/css/SLogin.css">
+    <script src="../public/js/SLogin.js"></script>
+    <title>Student Login</title>
+
+</head>
+<body>
+
+  <section>
+    <div class="container">
+      <div class="user signinBx">
+        <div class="imgBx"><img src="../public/images/LoginSignup.png" alt="" /></div>
+        <div class="formBx">
+          <form onsubmit="login(); return false;">
+            <h2>Login</h2>
+            <input type="email" required="true" name="email" placeholder="Email" id="Semail"/>
+            <input type="password" required="true" name="password" placeholder="Password" id="Spass"/>
+            <input type="submit" name="" value="Login"/>
+            <p class="signup">
+              Don't have an account ?
+              <a href="#" onclick="toggleForm();">Sign Up.</a>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div class="user signupBx">
+        <div class="formBx">
+          <form onsubmit="signUp()">
+            <h2>Create an account</h2>
+            <input type="text" required="true" name="" placeholder="Username" id="name"/>
+            <input type="email" required="true" name="" placeholder="Email Address" id="email"/>
+            <input type="password" required="true" name="" placeholder="Create Password" id="pass"/>
+            <input type="password" name="" placeholder="Confirm Password" id="cpass"/>
+            <input type="submit" name="" value="Sign Up"/>
+            <p class="signup">
+              Already have an account ?
+              <a href="#" onclick="toggleForm();">Login.</a>
+            </p>
+          </form>
+        </div>
+        <div class="imgBx"><img src="../public/images/LoginSignup.png" alt="" /></div>
+      </div>
+    </div>
+  </section>
+  <script src="../public/js/SLogin.js"></script>
+</body>
+</html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +17,8 @@
     
     <!--Custom style css-->
     <link rel="stylesheet" href="../public/css/SLogin.css">
-    <script src="../public/js/SLogin.js"></script>
-    <title>Student Login</title>
+    <script src="../public/js/AdLogin.js"></script>
+    <title>Admin Login</title>
 
 </head>
 <body>
@@ -32,8 +30,8 @@
         <div class="formBx">
           <form onsubmit="login(); return false;">
             <h2>Login</h2>
-            <input type="email" required="true" name="email" placeholder="Email" id="Semail"/>
-            <input type="password" required="true" name="password" placeholder="Password" id="Spass"/>
+            <input type="email" required="true" name="email" placeholder="Email" id="Aemail"/>
+            <input type="password" required="true" name="password" placeholder="Password" id="Apass"/>
             <input type="submit" name="" value="Login"/>
             <p class="signup">
               Don't have an account ?
@@ -50,6 +48,7 @@
             <input type="email" required="true" name="" placeholder="Email Address" id="email"/>
             <input type="password" required="true" name="" placeholder="Create Password" id="pass"/>
             <input type="password" name="" placeholder="Confirm Password" id="cpass"/>
+            <input type="password" name="" placeholder="Admin Authentication ID" id="authId"/>
             <input type="submit" name="" value="Sign Up"/>
             <p class="signup">
               Already have an account ?
@@ -61,6 +60,6 @@
       </div>
     </div>
   </section>
-  <script src="../public/js/SLogin.js"></script>
+  <script src="../public/js/Adlogin.js"></script>
 </body>
 </html>

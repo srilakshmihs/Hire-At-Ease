@@ -1,5 +1,6 @@
 const express = require("express");
 const user = require("./routes/user");
+const admin =require("./routes/admin")
 
 const student = require("./routes/student");
 
@@ -28,6 +29,8 @@ app.get("/", (req, res) => {
  */
 
 app.use("/user", user);
+
+app.use("/admin", admin);
 
 app.use("/student", student);
 

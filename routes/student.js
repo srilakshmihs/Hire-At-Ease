@@ -1,12 +1,14 @@
 const express = require('express')
 const path = require('path')
 const router = express.Router()
+const Company = require('../model/Company')
 const { check, validationResult } = require('express-validator')
 
 const auth = require('../middleware/auth')
 const Applicant = require('../model/Applicant')
 
 const cookieParser = require('cookie-parser')
+const { findOne } = require('../model/Company')
 
 router.use(cookieParser())
 router.use(express.urlencoded({ extended: false }))
@@ -34,6 +36,14 @@ router.get('/academics', auth, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/student/StDetails.html'))
 })
 
+router.get('/companies', auth, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/student/Sviewcompanies.html'))
+})
+
+//router.get('/apply', auth, (req, res) => {
+ // res.sendFile(path.resolve(__dirname, '../views/student/SApply.html'))
+//})
+
 router.get("/getPreload", auth, async (req, res)=>{
   try{
     const userID = req.cookies.userID;
@@ -55,6 +65,55 @@ router.get("/getPreload", auth, async (req, res)=>{
   }
   catch(e){
     console.log(e);
+  }
+})
+
+router.get('/reclist', async (req, res) =>{
+  try{
+    // let listComp = await Company.find().toArray(err, do)
+
+    console.log("Company list is here with us");
+    let listComp = await Company.find() //.toArray((err, documents)=>{
+      
+        console.log("Sending the required docs");
+        res.json(listComp)
+      // }
+    // })
+    // listComp.toArray
+    // res.send(listComp);
+  }
+  catch(e){
+    console.log("Error happend, c u in catch");
+    res.status(400).json({
+      error: true,
+      msg : "Could not fetch data, sorry :("
+    })
+  }
+})
+
+//put
+router.put('/apply', auth, async (req,res)=>{
+  const userID = req.cookies.userID;
+  const compID = req.body;
+
+  try{
+    let applicant = await Applicant.findOne({
+      userID,
+    });
+
+    if(!applicant){
+      return res.redirect("/academics");
+    }
+    res.json({
+      error : false,
+      msg : `you can apply ${compID}`
+    })
+  }
+  catch(e){
+    res.json({
+      error : true,
+      msg : "Could not apply"
+    })
   }
 })
 
@@ -111,6 +170,8 @@ router.post('/details', auth, async (req, res) => {
     // res.status(500).send("Error in Saving");
   }
 })
+
+
 
 router.use('*', (req, res) => {
   res.send('Error 404')

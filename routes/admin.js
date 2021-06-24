@@ -6,27 +6,65 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const path = require('path')
 const { ADMINAUTHID } = require('../config/config')
-
 const router = express.Router()
 const adauth = require('../middleware/adauth')
 const Admin = require('../model/Admin')
+const Company = require('../model/Company')
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
 
-/**
- * @method - POST
- * @param - /signup
- * @description - Admin SignUp
- */
 router.get('/login', (req, res) => {
   console.log('I am here inside route admin')
   res.sendFile(path.resolve(__dirname, '../views/admin/login.html'))
   console.log('nanu login page olage hogta edini')
 })
 
-// router.get('/login', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../views/admin/login.html'))
-// })
+router.get('/addrecruiters', adauth, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/admin/AddRecruiter.html'))
+})
+
+router.get('/logout', (req, res) => {
+  res.cookie('token', undefined)
+  res.cookie('adminID', undefined)
+  res.redirect('./login')
+})
+
+router.get('/dashboard', adauth, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/admin/ADashboard.html'))
+})
+
+router.get('/recruiters', adauth, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/admin/AllRec.html'))
+})
+
+router.get('/reclist', async (req, res) =>{
+  try{
+    // let listComp = await Company.find().toArray(err, do)
+
+    console.log("Company list is here with us");
+    let listComp = await Company.find() //.toArray((err, documents)=>{
+      // if(err){
+      //   res.status(400).json({
+      //     error: true,
+      //     msg : "Could not fetch data, sorry :("
+      //   }) 
+      // }
+      // else{
+        console.log("Sending the required docs");
+        res.json(listComp)
+      // }
+    // })
+    // listComp.toArray
+    // res.send(listComp);
+  }
+  catch(e){
+    console.log("Error happend, c u in catch");
+    res.status(400).json({
+      error: true,
+      msg : "Could not fetch data, sorry :("
+    })
+  }
+})
 
 router.post('/signup', async (req, res) => {
   const { username, email, password, authId } = req.body
@@ -85,22 +123,22 @@ router.post('/signup', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  console.log("Just entered login");
+  console.log('Just entered login')
   const { email, password } = req.body
   try {
-    console.log("Insider try block");
+    console.log('Insider try block')
     let admin = await Admin.findOne({
       email
     })
-    if (!admin){
-      console.log("Admin ilvante");
+    if (!admin) {
+      console.log('Admin ilvante')
       return res.status(400).json({
         message: 'User Not Exist'
       })
     }
     const isMatch = await bcrypt.compare(password, admin.password)
-    if (!isMatch){
-      console.log("Password sari ila lo");
+    if (!isMatch) {
+      console.log('Password sari ila lo')
       return res.status(400).json({
         error: 'true',
         message: 'Incorrect Password !'
@@ -111,7 +149,7 @@ router.post('/login', async (req, res) => {
         id: admin.id
       }
     }
-    console.log("sign madtidare ega");
+    console.log('sign madtidare ega')
     jwt.sign(
       payload,
       'nanuadmin',
@@ -122,7 +160,7 @@ router.post('/login', async (req, res) => {
         if (err) throw err
         res.cookie('token', token)
         res.cookie('adminID', admin.id)
-        console.log("ella chennag aytu");
+        console.log('ella chennag aytu')
         res.status(200).json({
           adminId: admin.id,
           adminEmail: admin.email,
@@ -131,7 +169,7 @@ router.post('/login', async (req, res) => {
       }
     )
   } catch (e) {
-    console.log("ELlo miss hoditide");
+    console.log('ELlo miss hoditide')
     console.error(e)
     res.status(500).json({
       message: 'Server Error'
@@ -139,24 +177,56 @@ router.post('/login', async (req, res) => {
   }
 })
 
-/**
- * @method - GET
- * @description - Get LoggedIn Admin
- * @param - /admin/me
- */
+router.post('/companies', adauth, async (req, res) => {
+  console.log('Loooo kelstidyaa, I am inside this /companies')
+  
 
-router.get('/dashboard', adauth, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../views/admin/ADashboard.html'))
+  console.log('Loooo kelstidyaa, about to enter try block')
+  try {
+    const { companyname, website, package,cutoff } = req.body
+    console.log('Loooo kelstidyaa, inside the try block')
+    // let company = await Company.findOne({
+    //   CId
+    // })
+    // if (company) {
+    //   console.log('Loooo kelstidyaa, company agle edyante')
+    //   company.Cname = Cname
+    //   company.Cweb = Cweb
+    //   company.Cpak = Cpak
+    //   company.save()
+
+    //   return res.status(200).json({
+    //     error: false,
+    //     msg: 'Company Already Existed, so updated the company data'
+    //   })
+    // }
+    const candidates = []
+    console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
+    company = new Company({
+      companyname,
+      website,
+      package,
+      cutoff,
+      candidates
+    })
+    console.log('Loooo kelstidyaa, can u see me')
+    await company.save()
+    console.log('Loooo kelstidyaa, save aytu lo')
+    res.status(200).json({
+      error: false,
+      message: 'Data saved!'
+    })
+  } catch (e) {
+    console.log(e)
+    res.status(400).json({
+      error: true,
+      message: 'Could not save data!'
+    })
+  }
 })
 
-router.get('/me', adauth, async (req, res) => {
-  try {
-    // request.user is getting fetched from Middleware after token authentication
-    const admin = await Admin.findById(req.admin.id)
-    res.json(admin)
-  } catch (e) {
-    res.send({ message: 'Error in Fetching user' })
-  }
+router.use('*', (req, res) => {
+  res.send('Error 404')
 })
 
 module.exports = router

@@ -44,7 +44,7 @@ const login = () =>{
   var pass = document.getElementById("Apass").value;
   var email = document.getElementById("Aemail").value;
 
-  fetch("/user/login", {
+  fetch("/admin/login", {
       method: "POST",
       body: JSON.stringify({ 
         email : email, 

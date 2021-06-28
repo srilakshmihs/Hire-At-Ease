@@ -97,7 +97,7 @@ $(document).ready(() => {
   const buildTemplate = (comp, ids, index) => {
     return `<tr id="${ids.listItemID}">
         <td>${index}</td>
-        <td>${comp.companyname}</td>
+        <td><a href="${comp.website}">${comp.companyname}</a></td>
         <td>${comp.package}</td>
         <td>${comp.cutoff}</td>
         <td><button type="button" class="btn btn-success" id="${ids.viewID}" data-toggle="modal" data-target="#viewApplicantsModal">View Applicants</button></td>   

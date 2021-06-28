@@ -64,7 +64,7 @@ $(document).ready(() => {
     const buildTemplate = (comp, ids, index) => {
       return `<tr id="${ids.listItemID}">
           <td>${index}</td>
-          <td>${comp.companyname}</td>
+          <td><a href="${comp.website}">${comp.companyname}</a></td>
           <td>${comp.package}</td>
           <td>${comp.cutoff}</td>
           <td><button class="btn btn-success" id="${ids.applyID}">Apply</button></td>    

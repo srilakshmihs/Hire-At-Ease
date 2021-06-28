@@ -36,47 +36,50 @@ $(document).ready(() => {
     const applyComp = (comp, compID, applyID) => {
       let applyBtn = $(`#${applyID}`)
       applyBtn.click(() => {
-        alert("You clicked a button")
-        // console.log(value)
-        // fetch(`/apply`, {
-        //   method: 'PUT',
-        //   body: JSON.stringify({ compID : comp._id }),
-        //   headers: {
-        //     'content-type': 'application/json; charset = utf-8'
-        //   }
-        // })
-        //   .then(response => {
-        //     return response.json()
-        //   })
-        //   .then(data => {
-        //     if (data.error) {
-        //       console.log(data.msg)
-        //     }
-        //     alert(data.msg)
-        //   })
+        // alert(`You clicked a button ${comp.companyname}`)
+        fetch("/student/apply", {
+          method: 'PUT',
+          body: JSON.stringify({ compID : comp._id }),
+          headers: {
+            'content-type': 'application/json; charset = utf-8'
+          }
+        }).then((response) => {
+            return response.json();
+          }).then((data) => {
+            if (data.error) {
+              if(data.noApplicant){
+                window.location.replace('./academics')
+              }
+              console.log(data.msg)
+            }
+            alert(data.msg)
+          })
       })
     };
 
   
   
     // building the company list template
-    const buildTemplate = (comp, ids) => {
+
+    const buildTemplate = (comp, ids, index) => {
       return `<tr id="${ids.listItemID}">
-          <td>1</td>
+          <td>${index}</td>
           <td>${comp.companyname}</td>
           <td>${comp.package}</td>
           <td>${comp.cutoff}</td>
-          <td><button class="btn btn-success  id="${ids.applyID}">Apply</button></td>    
+          <td><button class="btn btn-success" id="${ids.applyID}">Apply</button></td>    
       </tr>`
     }
    
     // building the company list
     const buildComp = data => {
       console.log(data)
+      let index = 1;
       data.forEach(comp => {
         let ids = buildID(comp)
-        display.append(buildTemplate(comp, ids))
+        display.append(buildTemplate(comp, ids, index))
         applyComp(comp, ids.compID, ids.applyID)
+        index++;
         // deleteComp(comp, ids.listItemID, ids.deleteID);
       })
     }

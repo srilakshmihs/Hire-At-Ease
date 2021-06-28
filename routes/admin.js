@@ -8,6 +8,7 @@ const path = require('path')
 const { ADMINAUTHID } = require('../config/config')
 const router = express.Router()
 const adauth = require('../middleware/adauth')
+const Applicant = require('../model/Applicant')
 const Admin = require('../model/Admin')
 const Company = require('../model/Company')
 const cookieParser = require('cookie-parser')
@@ -37,31 +38,140 @@ router.get('/recruiters', adauth, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/admin/AllRec.html'))
 })
 
-router.get('/reclist', async (req, res) =>{
-  try{
+router.get('/viewcandidates', adauth, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/admin/Aviewapplicants.html'))
+})
+
+router.get('/candidateslist/:id', adauth, async (req, res) => {
+  console.log("Try olag hogtidin");
+  try {
+    console.log("Try olag bandidini");
+    const _id = req.params.id
+    console.log("company Id sikkide");
+    let company = await Company.findOne({
+      _id
+    })
+    if(!company){
+      console.log("company elvante");
+      res.json({
+        error : true,
+        msg : "No company found"
+      });
+    }
+    console.log("company siktu nodana");
+    const candidateList = company.candidates
+    const toBeSent = []
+    const length = candidateList.length
+    for ( i = 0; i<length ; i++){
+      let _id = candidateList[i].candidateID;
+      try{
+        const candidate = await Applicant.findOne({
+          _id
+        })
+        let toBeAdded = {
+          candidateName : candidate.fullname,
+          candidateResume : candidate.resume
+        }
+        toBeSent.push(toBeAdded)
+      }
+      catch(e){
+        console.log(e);
+      }
+    }
+
+    res.json({
+      result : toBeSent,
+      error : false,
+      msg : "Candidate info is successful"
+    })
+  } catch (e) {
+    res.json({
+      error : true,
+      msg : "Error happend"
+    })
+  }
+})
+
+router.get('/reclist', adauth, async (req, res) => {
+  try {
     // let listComp = await Company.find().toArray(err, do)
 
-    console.log("Company list is here with us");
-    let listComp = await Company.find() //.toArray((err, documents)=>{
-      // if(err){
-      //   res.status(400).json({
-      //     error: true,
-      //     msg : "Could not fetch data, sorry :("
-      //   }) 
-      // }
-      // else{
-        console.log("Sending the required docs");
-        res.json(listComp)
-      // }
-    // })
-    // listComp.toArray
-    // res.send(listComp);
-  }
-  catch(e){
-    console.log("Error happend, c u in catch");
+    // console.log('Company list is here with us')
+    let listComp = await Company.find()
+    // console.log('Sending the required docs')
+    res.json(listComp)
+  } catch (e) {
+    // console.log('Error happend, c u in catch')
     res.status(400).json({
       error: true,
-      msg : "Could not fetch data, sorry :("
+      msg: 'Could not fetch data, sorry :('
+    })
+  }
+})
+
+router.post('/getPreload', adauth, async (req, res) => {
+  try {
+    // const compID = req.cookies.compID
+    const _id = req.body.compID
+    let company = await Company.findOne({
+      _id
+    })
+    if (company) {
+      res.status(200).json({
+        error: false,
+        companyname: company.companyname,
+        website: company.website,
+        package: company.package
+      })
+    }
+    else{
+      res.status(400).json({
+        error: true,
+        msg : "Could not find company"
+      })
+    }
+  } catch (e) {
+    console.log(e)
+    res.status(400).json({
+      error: true,
+      msg : "Could not edit company"
+    })
+  }
+
+})
+
+//put
+router.put('/editCompany', adauth, async (req, res) => {
+  console.log('Entered edit company')
+  const { compID, compName, package, website } = req.body
+
+  const _id = compID
+  console.log(_id)
+  console.log('Entereing try')
+  try {
+    console.log('Insider try')
+    let company = await Company.findOne({
+      _id
+    })
+    console.log('company sikot eno gottila')
+    if (!company) {
+      console.log('Company sigtilla')
+    }
+    console.log('Company sikkide ansatte')
+    company.companyname = compName
+    company.website = website
+    company.package = package
+    // company.cutoff = cgpa
+    company.save()
+    console.log('Successful')
+    res.json({
+      error: false,
+      msg: 'Company details edited successfully'
+    })
+  } catch (e) {
+    res.json({
+      error: true,
+      msg: "Error happend, couldn't edit"
     })
   }
 })
@@ -179,27 +289,13 @@ router.post('/login', async (req, res) => {
 
 router.post('/companies', adauth, async (req, res) => {
   console.log('Loooo kelstidyaa, I am inside this /companies')
-  
 
   console.log('Loooo kelstidyaa, about to enter try block')
   try {
-    const { companyname, website, package,cutoff } = req.body
+    const { companyname, website, package, cutoff } = req.body
     console.log('Loooo kelstidyaa, inside the try block')
-    // let company = await Company.findOne({
-    //   CId
-    // })
-    // if (company) {
-    //   console.log('Loooo kelstidyaa, company agle edyante')
-    //   company.Cname = Cname
-    //   company.Cweb = Cweb
-    //   company.Cpak = Cpak
-    //   company.save()
 
-    //   return res.status(200).json({
-    //     error: false,
-    //     msg: 'Company Already Existed, so updated the company data'
-    //   })
-    // }
+  
     const candidates = []
     console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
     company = new Company({

@@ -40,79 +40,164 @@ router.get('/companies', auth, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/student/Sviewcompanies.html'))
 })
 
-//router.get('/apply', auth, (req, res) => {
- // res.sendFile(path.resolve(__dirname, '../views/student/SApply.html'))
-//})
+router.get('/applications', auth, (req, res) => {
+  res.sendFile(
+    path.resolve(__dirname, '../views/student/SviewApplications.html')
+  )
+})
 
-router.get("/getPreload", auth, async (req, res)=>{
-  try{
-    const userID = req.cookies.userID;
+router.get('/getPreload', auth, async (req, res) => {
+  try {
+    const userID = req.cookies.userID
     let applicant = await Applicant.findOne({
       userID
     })
-    if(applicant){
+    if (applicant) {
       res.status(200).json({
         error: false,
-        fullname : applicant.fullname,
-        email : applicant.email,
-        cgpa : applicant.cgpa,
-        resume : applicant.resume
+        fullname: applicant.fullname,
+        email: applicant.email,
+        cgpa: applicant.cgpa,
+        resume: applicant.resume
       })
     }
     res.status(400).json({
-      error : true
+      error: true
     })
-  }
-  catch(e){
-    console.log(e);
+  } catch (e) {
+    console.log(e)
   }
 })
 
-router.get('/reclist', async (req, res) =>{
-  try{
+router.get('/reclist', async (req, res) => {
+  try {
     // let listComp = await Company.find().toArray(err, do)
 
-    console.log("Company list is here with us");
+    console.log('Company list is here with us')
     let listComp = await Company.find() //.toArray((err, documents)=>{
-      
-        console.log("Sending the required docs");
-        res.json(listComp)
-      // }
+
+    console.log('Sending the required docs')
+    res.json(listComp)
+    // }
     // })
     // listComp.toArray
     // res.send(listComp);
-  }
-  catch(e){
-    console.log("Error happend, c u in catch");
+  } catch (e) {
+    console.log('Error happend, c u in catch')
     res.status(400).json({
       error: true,
-      msg : "Could not fetch data, sorry :("
+      msg: 'Could not fetch data, sorry :('
     })
+  }
+})
+
+router.get('/applylist', auth, async (req, res) => {
+  console.log("Try olag hogtidin");
+  try {
+    console.log("Try olag bandidini");
+    const userID = req.cookies.userID
+    // const userID = req.body.userID
+    console.log("Used Id sikkide");
+    let applicant = await Applicant.findOne({
+      userID
+    })
+    if(!applicant){
+      console.log("Applicant illante");
+      res.json({
+        error : true,
+        msg : "No applicant found"
+      });
+    }
+    console.log("Applicant sikbitta");
+    // const toBeList = []
+    const offerList = applicant.offer
+    // offerList.forEach(await (element) => {
+    //   let comp = Company.findOne({
+    //     _id : element.offer.compID
+    //   })
+    //   toBeList.push(comp.companyname)
+    // })
+    // console.log("Loop olag hogtidene marre");
+    // for (i = 0; i<2 ; i++){
+    //   console.log("Ahhb onduuuu aaa erduu");
+    //   const _id = offerList[i].offerID.compID
+    //   let comp = await Company.findOne({
+    //     _id
+    //   })
+    //   toBeList.push(comp)
+    // }
+    console.log("He He loop mugitalla");
+    res.json(offerList)
+  } catch (e) {
+    res.send("Error anteeee")
   }
 })
 
 //put
-router.put('/apply', auth, async (req,res)=>{
-  const userID = req.cookies.userID;
-  const compID = req.body;
-
-  try{
+router.put('/apply', auth, async (req, res) => {
+  console.log('Annnaaa i am inside appy')
+  const userID = req.cookies.userID
+  const compID = req.body
+  const _id = compID.compID
+  console.log('About to get inside of try')
+  try {
+    console.log('Annaaaa try olag bande')
     let applicant = await Applicant.findOne({
-      userID,
-    });
-
-    if(!applicant){
-      return res.redirect("/academics");
-    }
-    res.json({
-      error : false,
-      msg : `you can apply ${compID}`
+      userID
     })
-  }
-  catch(e){
+    console.log('Applicant aytu')
+    console.log(_id)
+    let company = await Company.findOne({
+      _id
+    })
+    if (!applicant || !company) {
+      console.log('Applicant ilvante')
+      res.json({
+        error: true,
+        noApplicant: true,
+        msg: 'No applicant or company found'
+      })
+    }
+    const offer = applicant.offer
+
+    offer.forEach(element => {
+      console.log(element.offerID.compID)
+      if(element.offerID.compID == company._id){
+        throw err;
+        console.log("Already applied");
+      }
+    });
+    const candidates = company.candidates
+
+    const toBeAdded = {
+      offerID: compID,
+      compName : company.companyname,
+      status: 'pending'
+    }
+    const toBeAddedComp = {
+      candidateID: applicant._id,
+      status: 'pending'
+    }
+
+    offer.push(toBeAdded)
+    candidates.push(toBeAddedComp)
+    applicant.offer = offer
+    company.candidates = candidates
+    company.save()
+    applicant.save()
+    console.log('Success')
+    console.log('Tension ee madkobedi')
     res.json({
-      error : true,
-      msg : "Could not apply"
+      noApplicant: false,
+      error: false,
+      msg: `You applied to ${company.companyname}`
+    })
+  } catch (e) {
+    console.log('Inside catch')
+    res.json({
+      noApplicant: false,
+      error: true,
+      msg: 'Could not apply or you might have already applied'
     })
   }
 })
@@ -139,7 +224,7 @@ router.post('/details', auth, async (req, res) => {
       applicant.save()
 
       return res.status(200).json({
-        error : false,
+        error: false,
         msg: 'User Already Existed, so updated the user data'
       })
     }
@@ -170,8 +255,6 @@ router.post('/details', auth, async (req, res) => {
     // res.status(500).send("Error in Saving");
   }
 })
-
-
 
 router.use('*', (req, res) => {
   res.send('Error 404')

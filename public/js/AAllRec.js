@@ -170,6 +170,8 @@ $(document).ready(() => {
       <td>${index}</td>
       <td>${candidate.candidateName}</td>
       <td><a href="${candidate.candidateResume}" target="_blank">Click me</a></td>
+      <td><button type="button" class="btn btn-success">Accept</button></td>
+      <td><button type="button" class="btn btn-danger">Reject</button></td>
     </tr>`
   }
 

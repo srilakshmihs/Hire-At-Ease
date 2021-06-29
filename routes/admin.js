@@ -10,6 +10,7 @@ const router = express.Router()
 const adauth = require('../middleware/adauth')
 const Applicant = require('../model/Applicant')
 const Admin = require('../model/Admin')
+const Notification = require('../model/Notification')
 const Company = require('../model/Company')
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
@@ -40,6 +41,10 @@ router.get('/recruiters', adauth, (req, res) => {
 
 router.get('/viewcandidates', adauth, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/admin/Aviewapplicants.html'))
+})
+
+router.get('/announcements',adauth, (req, res) => {
+   res.sendFile(path.resolve(__dirname,'../views/admin/AAnnouncement.html'))
 })
 
 router.get('/candidateslist/:id', adauth, async (req, res) => {
@@ -287,6 +292,37 @@ router.post('/login', async (req, res) => {
   }
 })
 
+router.post('/notifications', adauth, async (req, res) => {
+  console.log('I am inside notifications nodana enagatte ')
+
+  console.log('try block olag horag nintidini')
+  try {
+    const { messageto,announcement } = req.body
+    console.log('nan try block olag bande')
+
+  
+   
+    console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
+    notification = new Notification({
+      messageto,
+      announcement
+    })
+    console.log(' can u see me')
+    await notification.save()
+    console.log(' save aytu lo')
+    res.status(200).json({
+      error: false,
+      message: 'Data saved!'
+    })
+  } catch (e) {
+    console.log(e)
+    res.status(400).json({
+      error: true,
+      message: 'Could not save data!'
+    })
+  }
+})
+
 router.post('/companies', adauth, async (req, res) => {
   console.log('Loooo kelstidyaa, I am inside this /companies')
 
@@ -320,6 +356,8 @@ router.post('/companies', adauth, async (req, res) => {
     })
   }
 })
+
+
 
 router.use('*', (req, res) => {
   res.send('Error 404')

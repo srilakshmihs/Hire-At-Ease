@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Dashboard</title>
+    <title>view notifications</title>
 
     <!-- Bootstrap core CSS-->
     <link href="../public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,20 +38,15 @@
       <!-- Navbar Search -->
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="searchKey">
+          <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" onClick='findString()'>
+            <button class="btn btn-primary" type="button">
               <i class="fas fa-search"></i>
             </button>
           </div>
         </div>
       </form>
-      <script>
-        findString = function findText() {
-          var text = document.getElementById('searchKey').value;
-          window.find(text)
-        }
-      </script>
+
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
@@ -100,7 +95,7 @@
         <li class="nav-item active">
           <a class="nav-link" href="ADashboard.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Companies</span>
           </a>
         </li>
         <li class="nav-item dropdown">
@@ -113,7 +108,11 @@
             <a class="dropdown-item" href="login.html">Login</a>
             <a class="dropdown-item" href="register.html">Register</a>
             <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-           
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Other Pages:</h6>
+            <a class="dropdown-item" href="404.html">404 Page</a>
+            <a class="dropdown-item" href="blank.html">Blank Page</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="charts.html">
@@ -128,9 +127,7 @@
       </ul>
 
       <div id="content-wrapper">
-
         <div class="container-fluid">
-
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -138,32 +135,18 @@
             </li>
             <li class="breadcrumb-item active">Overview</li>
           </ol>
-          
           <!-- Tables Example -->
           <div class="d-flex table-data">
             <table class="table table-striped">
               <thead class="thread-dark">
                 <tr>
-                  <th>No.</th>
-                  <th>Company Name</th>
-                  <th>Package</th>
-                  <th>Cut Off (in cgpa)</th>
-                  <th>View  Applicants</th>
-                  <th>Edit companies</th>
+                 <td> </td>
                 </tr>
               </thead>
-              <tbody id="companyList">
-               
+              <tbody id="notifications">
               </tbody>
             </table>
-          </div>
-<!-- 
-          <div>
-              <ul class="list-group" id = "display">
-
-              </ul>
-          </div> -->
-          
+          </div> 
         </div>
         <!-- /.container-fluid -->
 
@@ -205,89 +188,9 @@
         </div>
       </div>
     </div>
- <!--view applicants-->
- <div class="modal fade mt-4" id="viewApplicantsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="z-index: 1;">
-        <h5 class= "modal-title"  id="exampleModalLabel">View applicants</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex table-data">
-          <table class="table table-striped">
-            <thead class="thread-dark">
-              <tr>
-                <th>No.</th>
-                <th>Students Name</th>+
-                <th>Resume</th>
-                <th>Accept</th>
-                <th>Reject</th>
-                <!-- <th>Accept</th>
-                <th>Reject</th> -->
-              </tr>
-            </thead>
-            <tbody id="candidateList">
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-     
-    </div>
-  </div>
-</div>
-
- 
- <!--viewed applicants-->
-<!--edit company-->
-    <div class="modal fade" id="editCompModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit company</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3 row">
-                <label for="inputname" class="col-sm-2 col-form-label">Company Name</label>
-                <div class="col">
-                  <input type="text" class="form-control" id="compNameField">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="inputweb" class="col-sm-2 col-form-label">Website</label>
-                <div class="col">
-                  <input type="text" class="form-control" id="websiteField">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="inputreq" class="col-sm-2 col-form-label">Package</label>
-                <div class="col">
-                  <input type="text" class="form-control" id="packageField">
-                </div>
-              </div>
-              <button class="btn btn-success" type="submit" id="updateCompany">Upate</button>
-            </form>
-          </div>
-          <!-- <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div> -->
-        </div>
-      </div>
-    </div>
-
-<!--edited company-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <script src="../public/js/AAllRec.js"></script>
-    
+    <script src="../public/js/SViewNotifications.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../public/vendor/jquery/jquery.min.js"></script>

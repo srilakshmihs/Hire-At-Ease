@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const router = express.Router()
 const Company = require('../model/Company')
+const Notification =require('../model/Notification')
 const { check, validationResult } = require('express-validator')
 
 const auth = require('../middleware/auth')
@@ -41,9 +42,12 @@ router.get('/companies', auth, (req, res) => {
 })
 
 router.get('/applications', auth, (req, res) => {
-  res.sendFile(
-    path.resolve(__dirname, '../views/student/SviewApplications.html')
+  res.sendFile(path.resolve(__dirname, '../views/student/SviewApplications.html')
   )
+})
+
+router.get('/viewAnnouncements',auth, (req, res) =>{
+   res.sendFile(path.resolve(__dirname,'../views/student/SViewNotifications.html'))
 })
 
 router.get('/getPreload', auth, async (req, res) => {
@@ -71,17 +75,31 @@ router.get('/getPreload', auth, async (req, res) => {
 
 router.get('/reclist', async (req, res) => {
   try {
-    // let listComp = await Company.find().toArray(err, do)
+   
 
     console.log('Company list is here with us')
-    let listComp = await Company.find() //.toArray((err, documents)=>{
+    let listComp = await Company.find() 
 
     console.log('Sending the required docs')
     res.json(listComp)
-    // }
-    // })
-    // listComp.toArray
-    // res.send(listComp);
+    
+  } catch (e) {
+    console.log('Error happend, c u in catch')
+    res.status(400).json({
+      error: true,
+      msg: 'Could not fetch data, sorry :('
+    })
+  }
+})
+
+router.get('/notifications', async (req, res) => {
+  try {
+    console.log('all the messages are here with us')
+    let notification = await Notification.find() 
+
+    console.log('Sending the required docs')
+    res.json(notification)
+    
   } catch (e) {
     console.log('Error happend, c u in catch')
     res.status(400).json({
@@ -111,21 +129,7 @@ router.get('/applylist', auth, async (req, res) => {
     console.log("Applicant sikbitta");
     // const toBeList = []
     const offerList = applicant.offer
-    // offerList.forEach(await (element) => {
-    //   let comp = Company.findOne({
-    //     _id : element.offer.compID
-    //   })
-    //   toBeList.push(comp.companyname)
-    // })
-    // console.log("Loop olag hogtidene marre");
-    // for (i = 0; i<2 ; i++){
-    //   console.log("Ahhb onduuuu aaa erduu");
-    //   const _id = offerList[i].offerID.compID
-    //   let comp = await Company.findOne({
-    //     _id
-    //   })
-    //   toBeList.push(comp)
-    // }
+   
     console.log("He He loop mugitalla");
     res.json(offerList)
   } catch (e) {

@@ -16,7 +16,7 @@
         cutoff  : companyCutoff
       }),
       headers: {
-        'Content-type': 'application/json; charset = utf-8'
+        'Content-type' : 'application/json; charset = utf-8'
       }
     })
       .then(response => {
@@ -26,10 +26,10 @@
         console.log(data)
         if(data.error){
           alert(data.message)
-          location.reload();
         }
         else{
           alert(data.message)
+          location.reload();
         }
         
       })

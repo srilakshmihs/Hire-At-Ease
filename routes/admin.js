@@ -44,10 +44,37 @@ router.get('/viewcandidates', adauth, (req, res) => {
 })
 
 router.get('/announcements',adauth, (req, res) => {
-   res.sendFile(path.resolve(__dirname,'../views/admin/AAnnouncement.html'))
+  res.sendFile(path.resolve(__dirname,'../views/admin/AAnnouncement.html'))
 })
 
-router.get('/candidateslist/:id', adauth, async (req, res) => {
+router.get('/getMsgList', adauth,  async (req,res) =>{
+  let toBeAdded;
+  const notificationList = []
+  try{
+    let notification = await Notification.find()
+    console.log(notification)
+    notification.forEach(element => {
+      toBeAdded = {
+        msgto : element.messageto,
+        message : element.announcement,
+        date : element.createdAt
+      }
+      notificationList.push(toBeAdded)
+    });
+  }  
+  catch(e){
+    console.log(e);
+    res.json({
+      msg : "error occured"
+    })
+  }
+  res.json({
+    result : notificationList,
+    msg : "get message list is working"
+  })
+})
+
+router.get('/candidateslist/:id', async (req, res) => {
   console.log("Try olag hogtidin");
   try {
     console.log("Try olag bandidini");
@@ -73,9 +100,15 @@ router.get('/candidateslist/:id', adauth, async (req, res) => {
         const candidate = await Applicant.findOne({
           _id
         })
+        let status = true;
+        if(candidateList[i].status === "pending"){
+          status = false
+        }
         let toBeAdded = {
+          candidateID : _id,
           candidateName : candidate.fullname,
-          candidateResume : candidate.resume
+          candidateResume : candidate.resume,
+          candidateStatus : status
         }
         toBeSent.push(toBeAdded)
       }
@@ -179,6 +212,48 @@ router.put('/editCompany', adauth, async (req, res) => {
       msg: "Error happend, couldn't edit"
     })
   }
+})
+
+router.put('/editStatus', async (req, res) => {
+  console.log("Entered editStatus");
+  const listOfStudents = req.body.result;
+  const _id = req.body.compID;
+  console.log(listOfStudents)
+  console.log(_id);
+  try{
+    let company = await Company.findOne({
+      _id
+    })
+    if(company){
+      // let compCandidates = company.candidates
+      // console.log(compCandidates);
+      let toBeCandidateList = []
+      listOfStudents.forEach(element => {
+        let status = "pending"
+        if(element.status){
+          status = "accepted"
+        }
+        let toBeItemOfCandidateList = {
+          candidateID : element.studentId,
+          status : status
+        }
+        toBeCandidateList.push(toBeItemOfCandidateList)
+      });
+      company.candidates = toBeCandidateList;
+      company.save()
+    }
+    else{
+      throw err
+    }
+    
+  }catch(e){
+    res.json({ 
+      msg : "Status failed be update, try again"
+    })
+  }
+  res.json({
+    msg : "Status updated successfully"
+  })
 })
 
 router.post('/signup', async (req, res) => {
@@ -297,13 +372,13 @@ router.post('/notifications', adauth, async (req, res) => {
 
   console.log('try block olag horag nintidini')
   try {
-    const { messageto,announcement } = req.body
+    const { messageto, announcement } = req.body
     console.log('nan try block olag bande')
 
   
    
     console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
-    notification = new Notification({
+    let notification = new Notification({
       messageto,
       announcement
     })
@@ -322,7 +397,6 @@ router.post('/notifications', adauth, async (req, res) => {
     })
   }
 })
-
 router.post('/companies', adauth, async (req, res) => {
   console.log('Loooo kelstidyaa, I am inside this /companies')
 
@@ -356,8 +430,6 @@ router.post('/companies', adauth, async (req, res) => {
     })
   }
 })
-
-
 
 router.use('*', (req, res) => {
   res.send('Error 404')

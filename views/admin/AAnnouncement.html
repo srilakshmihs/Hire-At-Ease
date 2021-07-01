@@ -142,28 +142,32 @@
         </ol>
 
         <!-- add notification form-->
-        <form onsubmit="notifications(); return false;">
+        <form id="messageSaver">
           
           <div class="mb-3 row">
             <label for="inputname" class="col-sm-2 col-form-label"> To</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" id="Ato">
+              <input type="text" required="true" class="form-control" id="Ato">
             </div>
           </div>
           <div class="mb-3 row">
             <label for="inputweb" class="col-sm-2 col-form-label">Message </label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" id="Amsg">
+              <input type="text" required="true" class="form-control" id="Amsg">
             </div>
           </div>
          
 
           <!--<div class="d-grid gap-2 col-5 mx-auto">> -->
-          <button class="btn btn-success" type="submit">Announce</button>
+          <button class="btn btn-success" type="submit" >Announce</button>
 
           <!--</div>-->
         </form>
-         <script src="../public/js/AAnnouncements.js"></script> 
+
+        <div class="container mt-4" id="msgList">
+        
+        </div>
+         
 
 
 
@@ -210,8 +214,9 @@
       </div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     
-    
+    <script src="../public/js/AAnnouncements.js"></script> 
 
 </body>
 

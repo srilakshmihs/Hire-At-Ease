@@ -1,5 +1,3 @@
-
-
 $(document).ready(() => {
   const display = $('#companyList')
   const show = $('#candidateList')
@@ -7,7 +5,11 @@ $(document).ready(() => {
   const websiteForm = $('#websiteField')
   const packageForm = $('#packageField')
   const updateBtn = $('#updateCompany')
+  const statusUpdateBtn = $('#statusUpdater')
+  let selectedCompany;
+  let selectedStudents = [];
 
+  
   const getCompList = () => {
     fetch('/admin/reclist', { method: 'GET' })
       .then(response => {
@@ -118,28 +120,11 @@ $(document).ready(() => {
     })
   }
 
-  // building the candidate
-
-  // const getCandidateList = () => {
-  //   console.log("fetching the list");
-  //   fetch('/admin/candidateslist', { method: 'GET' })
-  //     .then(response => {
-  //       return response.json()
-  //     })
-  //     .then(data => {
-  //       if (data.error) {
-  //         alert(data.msg)
-  //         window.location.replace('/admin/dashboard')
-  //         return
-  //       }
-  //       console.log(data)
-  //       buildCandidateList(data)
-  //     })
-  // }
-
   const viewCandidates = (comp, viewID) => {
     let viewBtn = $(`#${viewID}`)
     viewBtn.click(() => {
+      selectedStudents = []
+      selectedCompany = comp._id;
       fetch(`/admin/candidateslist/${comp._id}`, { 
         method: 'GET'
       })
@@ -150,29 +135,66 @@ $(document).ready(() => {
         console.log(data);
         if(!data.error){
           buildCandidateList(data.result)
+          data.result.forEach(element => {
+            selectedStudents.push(element.candidateID)
+          });
         }
       })
     })
   }
+
+  statusUpdateBtn.click(()=>{
+    let statusListToBeSent = []
+    // console.log(selectedStudents);
+    selectedStudents.forEach(element => {
+      let toBeAsStatus = $(`#${selectedCompany}_${element}`).prop("checked")
+      let statusItemToBeAdded = {
+        studentId : element,
+        status : toBeAsStatus
+      }
+      statusListToBeSent.push(statusItemToBeAdded)
+    });
+    console.log("Here you go daa");
+    console.log(statusListToBeSent);
+
+    fetch('/admin/editStatus',{
+      method : 'PUT',
+      body : JSON.stringify({
+        result : statusListToBeSent,
+        compID : selectedCompany
+      }),
+      headers : {
+        'content-type': 'application/json; charset = utf-8'
+      }
+    })
+    .then(response=>{
+      return response.json()
+    })
+    .then(data => {
+      alert(data.msg)
+    })
+  })
 
   const buildCandidateList = (data) => {
     show.empty()
     console.log(data)
     let index = 1
     data.forEach((candidate) => {
+      //let statusID = candidate.candidateID
       show.append(buildList(candidate, index))
+      let checkID = `${selectedCompany}_${candidate.candidateID}`;
+      $(`#${checkID}`).prop("checked", candidate.candidateStatus)
       index++
     })
   }
 
   const buildList = (candidate, index) => {
+    let checkID = `${selectedCompany}_${candidate.candidateID}`;
     return `<tr>
       <td>${index}</td>
       <td>${candidate.candidateName}</td>
       <td><a href="${candidate.candidateResume}" target="_blank">Click me</a></td>
-      <td><button type="button" class="btn btn-success">Accept</button></td>
-      <td><button type="button" class="btn btn-danger">Reject</button></td>
+      <td><input type="checkbox" id="${checkID}"></td>
     </tr>`
   }
-
 })

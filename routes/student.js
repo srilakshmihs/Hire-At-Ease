@@ -92,13 +92,22 @@ router.get('/reclist', async (req, res) => {
   }
 })
 
-router.get('/notifications', async (req, res) => {
+router.get('/notifications', auth, async (req, res) => {
+  let toBeAdded;
+  const notificationList = []
   try {
     console.log('all the messages are here with us')
     let notification = await Notification.find() 
-
+    notification.forEach(element => {
+      toBeAdded = {
+        msgto : element.messageto,
+        message : element.announcement,
+        date : element.createdAt
+      }
+      notificationList.push(toBeAdded)
+    });
     console.log('Sending the required docs')
-    res.json(notification)
+    // res.json(notification)
     
   } catch (e) {
     console.log('Error happend, c u in catch')
@@ -107,6 +116,11 @@ router.get('/notifications', async (req, res) => {
       msg: 'Could not fetch data, sorry :('
     })
   }
+  res.json({
+    result : notificationList,
+    msg : "get message list is working"
+  })
+
 })
 
 router.get('/applylist', auth, async (req, res) => {

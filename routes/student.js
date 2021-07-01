@@ -141,13 +141,36 @@ router.get('/applylist', auth, async (req, res) => {
       });
     }
     console.log("Applicant sikbitta");
-    // const toBeList = []
+    const toBeList = []
     const offerList = applicant.offer
-   
+    for ( let i = 0; i< offerList.length ; i++) {
+      let toBeStatus;
+      let _id = offerList[i].offerID.compID
+      let company = await Company.findOne({
+        _id
+      })
+      if(!company){
+        throw err
+      }
+      let candidates = company.candidates
+      candidates.forEach(element2 => {
+        if(element2.candidateID == applicant._id){
+          toBeStatus = element2.status
+        } 
+      });
+      let toBeAdded = {
+        compName : offerList[i].compName,
+        status : toBeStatus
+      }
+      toBeList.push(toBeAdded)
+    }
     console.log("He He loop mugitalla");
-    res.json(offerList)
+    res.json(toBeList)
   } catch (e) {
-    res.send("Error anteeee")
+    res.json({
+      error : true,
+      msg : "Could not fetch content at this moment"
+    })
   }
 })
 

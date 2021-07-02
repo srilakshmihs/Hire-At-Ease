@@ -149,11 +149,7 @@ router.get('/applylist', auth, async (req, res) => {
         _id
       })
       if(!company){
-<<<<<<< HEAD
-=======
         continue
->>>>>>> 02332f8 (Worked on merge error)
-        throw err
       }
       let candidates = company.candidates
       candidates.forEach(element2 => {

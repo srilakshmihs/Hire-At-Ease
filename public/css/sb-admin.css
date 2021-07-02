@@ -17,6 +17,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-top: 60px;
 }
 
 #wrapper #content-wrapper {
@@ -24,6 +25,7 @@ body {
   width: 100%;
   padding-top: 1rem;
   padding-bottom: 80px;
+  padding-left: 230px;
 }
 
 body.fixed-nav #content-wrapper {
@@ -87,6 +89,8 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .navbar{
   background: #F0EFFF;
+  width: 100%;
+  position: fixed;
 }
 .navbar-nav .form-inline .input-group {
   width: 100%;
@@ -141,6 +145,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  position: fixed;
 }
 
 .sidebar .nav-item:last-child {

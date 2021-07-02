@@ -122,7 +122,6 @@ router.get('/notifications', auth, async (req, res) => {
   })
 
 })
-
 router.get('/applylist', auth, async (req, res) => {
   console.log("Try olag hogtidin");
   try {
@@ -150,6 +149,10 @@ router.get('/applylist', auth, async (req, res) => {
         _id
       })
       if(!company){
+<<<<<<< HEAD
+=======
+        continue
+>>>>>>> 02332f8 (Worked on merge error)
         throw err
       }
       let candidates = company.candidates
@@ -175,6 +178,10 @@ router.get('/applylist', auth, async (req, res) => {
 })
 
 //put
+
+
+
+
 router.put('/apply', auth, async (req, res) => {
   console.log('Annnaaa i am inside appy')
   const userID = req.cookies.userID

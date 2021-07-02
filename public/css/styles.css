@@ -1,0 +1,14 @@
+.color{
+    color: rgb(0, 132, 255);
+}
+
+li{
+	display: inline-flex;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+footer {
+	text-align: center;
+	padding: 3px;
+  }

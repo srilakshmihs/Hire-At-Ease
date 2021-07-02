@@ -4633,6 +4633,7 @@ input[type="button"].btn-block {
 }
 
 .breadcrumb {
+  position: fixed;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -4642,6 +4643,7 @@ input[type="button"].btn-block {
   list-style: none;
   background-color: #e9ecef;
   border-radius: 0.25rem;
+  position: fixed;
 }
 
 .breadcrumb-item + .breadcrumb-item {

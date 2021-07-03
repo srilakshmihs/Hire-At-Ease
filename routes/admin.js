@@ -15,6 +15,11 @@ const Company = require('../model/Company')
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
 
+
+router.get('/homepage', (req, res) =>{
+  res.sendFile(path.resolve(__dirname, '../views/index.html'))
+})
+
 router.get('/login', (req, res) => {
   console.log('I am here inside route admin')
   res.sendFile(path.resolve(__dirname, '../views/admin/login.html'))

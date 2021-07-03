@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname,'./views/index.html'))
 });
 
+app.get("/bot", (req, res) => {
+  res.sendFile(path.resolve(__dirname,'./public/fu/bot.html'))
+});
+
 /**
  * Router Middleware
  * Router - /user/*

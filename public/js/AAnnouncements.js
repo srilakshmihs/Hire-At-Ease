@@ -44,7 +44,7 @@ $(document).ready(() => {
                 <h5 class="card-title">${msg.message}</h5>
                 <p class="card-text">Branch ${msg.msgto}</p>
                 <p class="card-text">Date ${msg.date.slice(0,10)}</p>
-                <a href="/student/companies" class="btn btn-primary">Apply</a>
+               
               </div>
             </div>` /*Change the payh*/
             

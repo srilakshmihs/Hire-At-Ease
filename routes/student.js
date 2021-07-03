@@ -25,6 +25,10 @@ router.get('/logout', (req, res) => {
   res.redirect('./login')
 })
 
+router.get('/homepage' , (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/index.html'))
+})
+
 router.get('/signup', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/student/signup.html'))
 })
@@ -48,6 +52,10 @@ router.get('/applications', auth, (req, res) => {
 
 router.get('/viewAnnouncements',auth, (req, res) =>{
    res.sendFile(path.resolve(__dirname,'../views/student/SViewNotifications.html'))
+})
+
+router.get('/videos',auth, (req, res) =>  {
+  res.sendFile(path.resolve(__dirname, '../views/student/SVideos.html'))
 })
 
 router.get('/getPreload', auth, async (req, res) => {

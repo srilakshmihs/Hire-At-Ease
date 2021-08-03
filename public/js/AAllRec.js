@@ -22,9 +22,7 @@ $(document).ready(() => {
           return
         }
 
-        console.log(data)
         buildComp(data)
-        console.log('Data is here in frontend')
       })
   }
 
@@ -44,7 +42,6 @@ $(document).ready(() => {
   const editComp = (comp, compID, editID) => {
     let editBtn = $(`#${editID}`)
     editBtn.click(() => {
-      console.log(`You clicked ${comp._id}`)
 
       // window.location.replace(`/admin/saveCompID/1`)
       // window.location.replace(`/admin/saveCompID/${comp._id}`)
@@ -59,7 +56,6 @@ $(document).ready(() => {
           return response.json()
         })
         .then(data => {
-          console.log(data.companyname)
           if (!data.error) {
             compNameForm.val(`${data.companyname}`)
             websiteForm.val(`${data.website}`)
@@ -70,7 +66,6 @@ $(document).ready(() => {
       updateBtn.click(() => {
         // alert("You clicked")
 
-        console.log(compNameForm.val())
         fetch('/admin/editCompany', {
           method: 'PUT',
           body: JSON.stringify({
@@ -84,11 +79,9 @@ $(document).ready(() => {
           }
         })
           .then(response => {
-            console.log(response.json())
             return response.json()
           })
           .then(data => {
-            console.log(data)
             alert(data.msg)
           })
       })
@@ -108,7 +101,6 @@ $(document).ready(() => {
   }
   // building the company list
   const buildComp = data => {
-    console.log(data)
     let index = 1
     // display = document.getElementById("companyList1");
     data.forEach(comp => {
@@ -132,7 +124,6 @@ $(document).ready(() => {
         return response.json()
       })
       .then((data) =>{
-        console.log(data);
         if(!data.error){
           buildCandidateList(data.result)
           data.result.forEach(element => {
@@ -145,7 +136,6 @@ $(document).ready(() => {
 
   statusUpdateBtn.click(()=>{
     let statusListToBeSent = []
-    // console.log(selectedStudents);
     selectedStudents.forEach(element => {
       let toBeAsStatus = $(`#${selectedCompany}_${element}`).prop("checked")
       let statusItemToBeAdded = {
@@ -154,8 +144,6 @@ $(document).ready(() => {
       }
       statusListToBeSent.push(statusItemToBeAdded)
     });
-    console.log("Here you go daa");
-    console.log(statusListToBeSent);
 
     fetch('/admin/editStatus',{
       method : 'PUT',
@@ -177,7 +165,6 @@ $(document).ready(() => {
 
   const buildCandidateList = (data) => {
     show.empty()
-    console.log(data)
     let index = 1
     data.forEach((candidate) => {
       //let statusID = candidate.candidateID

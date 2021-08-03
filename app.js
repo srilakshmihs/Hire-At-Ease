@@ -26,12 +26,6 @@ app.get("/bot", (req, res) => {
   res.sendFile(path.resolve(__dirname,'./public/fu/bot.html'))
 });
 
-/**
- * Router Middleware
- * Router - /user/*
- * Method - *
- */
-
 app.use("/user", user);
 
 app.use("/admin", admin);

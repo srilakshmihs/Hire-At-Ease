@@ -85,14 +85,11 @@ router.get('/reclist', async (req, res) => {
   try {
    
 
-    console.log('Company list is here with us')
     let listComp = await Company.find() 
 
-    console.log('Sending the required docs')
     res.json(listComp)
     
   } catch (e) {
-    console.log('Error happend, c u in catch')
     res.status(400).json({
       error: true,
       msg: 'Could not fetch data, sorry :('
@@ -104,7 +101,6 @@ router.get('/notifications', auth, async (req, res) => {
   let toBeAdded;
   const notificationList = []
   try {
-    console.log('all the messages are here with us')
     let notification = await Notification.find() 
     notification.forEach(element => {
       toBeAdded = {
@@ -114,11 +110,8 @@ router.get('/notifications', auth, async (req, res) => {
       }
       notificationList.push(toBeAdded)
     });
-    console.log('Sending the required docs')
-    // res.json(notification)
     
   } catch (e) {
-    console.log('Error happend, c u in catch')
     res.status(400).json({
       error: true,
       msg: 'Could not fetch data, sorry :('
@@ -131,23 +124,17 @@ router.get('/notifications', auth, async (req, res) => {
 
 })
 router.get('/applylist', auth, async (req, res) => {
-  console.log("Try olag hogtidin");
   try {
-    console.log("Try olag bandidini");
     const userID = req.cookies.userID
-    // const userID = req.body.userID
-    console.log("Used Id sikkide");
     let applicant = await Applicant.findOne({
       userID
     })
     if(!applicant){
-      console.log("Applicant illante");
       res.json({
         error : true,
         msg : "No applicant found"
       });
     }
-    console.log("Applicant sikbitta");
     const toBeList = []
     const offerList = applicant.offer
     for ( let i = 0; i< offerList.length ; i++) {
@@ -171,7 +158,6 @@ router.get('/applylist', auth, async (req, res) => {
       }
       toBeList.push(toBeAdded)
     }
-    console.log("He He loop mugitalla");
     res.json(toBeList)
   } catch (e) {
     res.json({
@@ -187,23 +173,17 @@ router.get('/applylist', auth, async (req, res) => {
 
 
 router.put('/apply', auth, async (req, res) => {
-  console.log('Annnaaa i am inside appy')
   const userID = req.cookies.userID
   const compID = req.body
   const _id = compID.compID
-  console.log('About to get inside of try')
   try {
-    console.log('Annaaaa try olag bande')
     let applicant = await Applicant.findOne({
       userID
     })
-    console.log('Applicant aytu')
-    console.log(_id)
     let company = await Company.findOne({
       _id
     })
     if (!applicant || !company) {
-      console.log('Applicant ilvante')
       res.json({
         error: true,
         noApplicant: true,
@@ -213,10 +193,8 @@ router.put('/apply', auth, async (req, res) => {
     const offer = applicant.offer
 
     offer.forEach(element => {
-      console.log(element.offerID.compID)
       if(element.offerID.compID == company._id){
         throw err;
-        console.log("Already applied");
       }
     });
     const candidates = company.candidates
@@ -237,15 +215,12 @@ router.put('/apply', auth, async (req, res) => {
     company.candidates = candidates
     company.save()
     applicant.save()
-    console.log('Success')
-    console.log('Tension ee madkobedi')
     res.json({
       noApplicant: false,
       error: false,
       msg: `You applied to ${company.companyname}`
     })
   } catch (e) {
-    console.log('Inside catch')
     res.json({
       noApplicant: false,
       error: true,
@@ -255,20 +230,14 @@ router.put('/apply', auth, async (req, res) => {
 })
 
 router.post('/details', auth, async (req, res) => {
-  console.log('Loooo kelstidyaa, I am inside this /details')
-  console.log('Loooo kelstidyaa, Error ilvante')
   const { fullname, email, cgpa, resume } = req.body
 
-  console.log('Loooo kelstidyaa, about to enter try block')
   const userID = req.cookies.userID
   try {
-    console.log('Loooo kelstidyaa, inside the try block')
     let applicant = await Applicant.findOne({
       userID
     })
     if (applicant) {
-      console.log('Loooo kelstidyaa, hudga agle idananante')
-
       applicant.fullname = fullname
       applicant.email = email
       applicant.cgpa = cgpa
@@ -281,7 +250,6 @@ router.post('/details', auth, async (req, res) => {
       })
     }
     const offer = []
-    console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
     applicant = new Applicant({
       userID,
       fullname,
@@ -290,16 +258,13 @@ router.post('/details', auth, async (req, res) => {
       resume,
       offer
     })
-    console.log('Loooo kelstidyaa, can u see me')
     await applicant.save()
-    console.log('Loooo kelstidyaa, save aytu lo')
     res.status(200).json({
       error: false,
       message: 'Data saved!'
     })
     // res.status(200).send("Data saved");
   } catch (e) {
-    console.log(e)
     res.status(400).json({
       error: true,
       message: 'Could not save data!'

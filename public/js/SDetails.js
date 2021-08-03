@@ -1,13 +1,11 @@
 
 
 const setInput = () => {
-  console.log("Bro dont worry i m inside set input");
   fetch('/student/getPreload',{method : 'GET'})
   .then((response) => {
     return response.json()
   })
   .then((data) =>{
-    console.log(data);
     if(!data.error){
       document.getElementById('name').value = data.fullname;
       document.getElementById('email').value = data.email;
@@ -15,7 +13,6 @@ const setInput = () => {
       document.getElementById('resume').value = data.resume;
     }
     else{
-      console.log("no data found");
     }
   })
 }
@@ -26,7 +23,6 @@ const details = () => {
   var cgpa = document.getElementById('cgpa').value
   var resume = document.getElementById('resume').value
 
-  console.log(`${fullname} ${email} ${cgpa} ${resume}`)
 
   fetch('/student/details', {
     method: 'POST',
@@ -44,7 +40,6 @@ const details = () => {
       return response.json()
     })
     .then(data => {
-      console.log(data)
       if(data.error){
         alert(data.msg)
         location.reload();

@@ -21,9 +21,7 @@ router.get('/homepage', (req, res) =>{
 })
 
 router.get('/login', (req, res) => {
-  console.log('I am here inside route admin')
   res.sendFile(path.resolve(__dirname, '../views/admin/login.html'))
-  console.log('nanu login page olage hogta edini')
 })
 
 router.get('/addrecruiters', adauth, (req, res) => {
@@ -57,7 +55,6 @@ router.get('/getMsgList', adauth,  async (req,res) =>{
   const notificationList = []
   try{
     let notification = await Notification.find()
-    console.log(notification)
     notification.forEach(element => {
       toBeAdded = {
         msgto : element.messageto,
@@ -80,22 +77,17 @@ router.get('/getMsgList', adauth,  async (req,res) =>{
 })
 
 router.get('/candidateslist/:id', async (req, res) => {
-  console.log("Try olag hogtidin");
   try {
-    console.log("Try olag bandidini");
     const _id = req.params.id
-    console.log("company Id sikkide");
     let company = await Company.findOne({
       _id
     })
     if(!company){
-      console.log("company elvante");
       res.json({
         error : true,
         msg : "No company found"
       });
     }
-    console.log("company siktu nodana");
     const candidateList = company.candidates
     const toBeSent = []
     const length = candidateList.length
@@ -137,14 +129,9 @@ router.get('/candidateslist/:id', async (req, res) => {
 
 router.get('/reclist', adauth, async (req, res) => {
   try {
-    // let listComp = await Company.find().toArray(err, do)
-
-    // console.log('Company list is here with us')
     let listComp = await Company.find()
-    // console.log('Sending the required docs')
     res.json(listComp)
   } catch (e) {
-    // console.log('Error happend, c u in catch')
     res.status(400).json({
       error: true,
       msg: 'Could not fetch data, sorry :('
@@ -154,7 +141,6 @@ router.get('/reclist', adauth, async (req, res) => {
 
 router.post('/getPreload', adauth, async (req, res) => {
   try {
-    // const compID = req.cookies.compID
     const _id = req.body.compID
     let company = await Company.findOne({
       _id
@@ -185,28 +171,19 @@ router.post('/getPreload', adauth, async (req, res) => {
 
 //put
 router.put('/editCompany', adauth, async (req, res) => {
-  console.log('Entered edit company')
   const { compID, compName, package, website } = req.body
 
   const _id = compID
-  console.log(_id)
-  console.log('Entereing try')
   try {
-    console.log('Insider try')
     let company = await Company.findOne({
       _id
     })
-    console.log('company sikot eno gottila')
     if (!company) {
-      console.log('Company sigtilla')
     }
-    console.log('Company sikkide ansatte')
     company.companyname = compName
     company.website = website
     company.package = package
-    // company.cutoff = cgpa
     company.save()
-    console.log('Successful')
     res.json({
       error: false,
       msg: 'Company details edited successfully'
@@ -220,18 +197,13 @@ router.put('/editCompany', adauth, async (req, res) => {
 })
 
 router.put('/editStatus', async (req, res) => {
-  console.log("Entered editStatus");
   const listOfStudents = req.body.result;
   const _id = req.body.compID;
-  console.log(listOfStudents)
-  console.log(_id);
   try{
     let company = await Company.findOne({
       _id
     })
     if(company){
-      // let compCandidates = company.candidates
-      // console.log(compCandidates);
       let toBeCandidateList = []
       listOfStudents.forEach(element => {
         let status = "pending"
@@ -318,22 +290,18 @@ router.post('/signup', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  console.log('Just entered login')
   const { email, password } = req.body
   try {
-    console.log('Insider try block')
     let admin = await Admin.findOne({
       email
     })
     if (!admin) {
-      console.log('Admin ilvante')
       return res.status(400).json({
         message: 'User Not Exist'
       })
     }
     const isMatch = await bcrypt.compare(password, admin.password)
     if (!isMatch) {
-      console.log('Password sari ila lo')
       return res.status(400).json({
         error: 'true',
         message: 'Incorrect Password !'
@@ -344,7 +312,6 @@ router.post('/login', async (req, res) => {
         id: admin.id
       }
     }
-    console.log('sign madtidare ega')
     jwt.sign(
       payload,
       'nanuadmin',
@@ -355,7 +322,6 @@ router.post('/login', async (req, res) => {
         if (err) throw err
         res.cookie('token', token)
         res.cookie('adminID', admin.id)
-        console.log('ella chennag aytu')
         res.status(200).json({
           adminId: admin.id,
           adminEmail: admin.email,
@@ -364,8 +330,6 @@ router.post('/login', async (req, res) => {
       }
     )
   } catch (e) {
-    console.log('ELlo miss hoditide')
-    console.error(e)
     res.status(500).json({
       message: 'Server Error'
     })
@@ -373,29 +337,18 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/notifications', adauth, async (req, res) => {
-  console.log('I am inside notifications nodana enagatte ')
-
-  console.log('try block olag horag nintidini')
   try {
     const { messageto, announcement } = req.body
-    console.log('nan try block olag bande')
-
-  
-   
-    console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
     let notification = new Notification({
       messageto,
       announcement
     })
-    console.log(' can u see me')
     await notification.save()
-    console.log(' save aytu lo')
     res.status(200).json({
       error: false,
       message: 'Data saved!'
     })
   } catch (e) {
-    console.log(e)
     res.status(400).json({
       error: true,
       message: 'Could not save data!'
@@ -403,16 +356,9 @@ router.post('/notifications', adauth, async (req, res) => {
   }
 })
 router.post('/companies', adauth, async (req, res) => {
-  console.log('Loooo kelstidyaa, I am inside this /companies')
-
-  console.log('Loooo kelstidyaa, about to enter try block')
   try {
     const { companyname, website, package, cutoff } = req.body
-    console.log('Loooo kelstidyaa, inside the try block')
-
-  
     const candidates = []
-    console.log('Loooo kelstidyaa, about to commit error, nodana enagutte')
     company = new Company({
       companyname,
       website,
@@ -420,9 +366,7 @@ router.post('/companies', adauth, async (req, res) => {
       cutoff,
       candidates
     })
-    console.log('Loooo kelstidyaa, can u see me')
     await company.save()
-    console.log('Loooo kelstidyaa, save aytu lo')
     res.status(200).json({
       error: false,
       message: 'Data saved!'

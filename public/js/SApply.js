@@ -6,7 +6,6 @@
     var phno = document.getElementById('Snum').value
     var resume = document.getElementById('Sresume').value
   
-    console.log(`${Sname} ${Semail} ${Snum} ${Sresume}`)
   
     fetch('/student/', {
       method: 'POST',
@@ -24,7 +23,6 @@
         return response.json()
       })
       .then(data => {
-        console.log(data)
         if(data.error){
           alert(data.msg)
           location.reload();

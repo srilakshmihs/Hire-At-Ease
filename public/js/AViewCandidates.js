@@ -12,7 +12,6 @@ $(document).ready(() => {
             window.location.replace('/student/dashboard')
             return
           }
-          console.log(data)
           buildApplyList(data)
         })
     }
@@ -30,7 +29,6 @@ $(document).ready(() => {
   
     // building the company list
     const buildApplyList = data => {
-      console.log(data)
       let index = 1;
       data.forEach(comp => {
       //   let ids = buildID(comp)

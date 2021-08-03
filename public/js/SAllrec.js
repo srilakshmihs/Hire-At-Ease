@@ -13,9 +13,7 @@ $(document).ready(() => {
             return
           }
   
-          console.log(data)
           buildComp(data)
-          console.log('Data is here in frontend')
         })
     }
   
@@ -50,7 +48,6 @@ $(document).ready(() => {
               if(data.noApplicant){
                 window.location.replace('./academics')
               }
-              console.log(data.msg)
             }
             alert(data.msg)
           })
@@ -73,7 +70,6 @@ $(document).ready(() => {
    
     // building the company list
     const buildComp = data => {
-      console.log(data)
       let index = 1;
       data.forEach(comp => {
         let ids = buildID(comp)

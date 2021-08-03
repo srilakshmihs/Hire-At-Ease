@@ -5,7 +5,6 @@
     var companyPackage = document.getElementById('Cpak').value
     var companyCutoff = document.getElementById('Cutoff').value
   
-    console.log(` ${companyName} ${companyWebsite} ${companyPackage}`)
   
     fetch('/admin/companies', {
       method: 'POST',
@@ -23,7 +22,6 @@
         return response.json()
       })
       .then(data => {
-        console.log(data)
         if(data.error){
           alert(data.message)
         }

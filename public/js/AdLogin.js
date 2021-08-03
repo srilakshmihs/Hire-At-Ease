@@ -14,7 +14,6 @@ const signUp = () =>{
   var name = document.getElementById("name").value;
   var email = document.getElementById("email").value;
   
-  console.log(`${name} ${email} ${pass}`);
 
   fetch("/admin/signup", {
       method: "POST",
@@ -34,7 +33,6 @@ const signUp = () =>{
       return response.json();
   })
   .then((data) => {
-      console.log(data);
       alert(data.msg)
       window.location.replace("/admin/dashboard");
   });
@@ -58,7 +56,6 @@ const login = () =>{
       return response.json();
   })
   .then((data) => {
-      console.log(data);
       if(data.error) {
         alert("Enter correct password");
         location.reload();

@@ -20,7 +20,6 @@ $(document).ready(() => {
         return response.json()
       })
       .then(data => {
-        console.log(data)
         if (data.error) {
           alert(data.message)
         } else {
@@ -75,7 +74,6 @@ $(document).ready(() => {
         return response.json()
       })
       .then(data => {
-        console.log(data.result)
         buildMessage(data.result.reverse())
         //   alert(data.msg)
       })

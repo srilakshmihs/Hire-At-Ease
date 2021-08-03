@@ -40,7 +40,9 @@ Student Login              |  Admin Login
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/view_app.JPG)
 
 > Admin can analyse the response and results of each company, even the performance of students. To make the understanding ease, different graphs are available to admin, as it supports him to make furthur decisions which can benifit students.
-> 
+
+Graph 1            |  Graph2
+:-------------------------:|:-------------------------:
 :-------------------------:|:-------------------------:
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph2.JPG)
 

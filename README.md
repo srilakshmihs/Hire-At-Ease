@@ -17,6 +17,7 @@ Student Login              |  Admin Login
 
 #### Dashboard
 > This dashboard will allow the user to navigate to required page and to perform specific operations.
+
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/dash1.JPG)
 
 #### Student's view

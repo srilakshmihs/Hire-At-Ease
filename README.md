@@ -19,9 +19,31 @@ Student Login              |  Admin Login
 > This dashboard will allow the user to navigate to required page and to perform specific operations.
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/dash1.JPG)
 
+#### Student's view
+> Student can see the list of arrived companies to campus and register for the same with in no time by using **Companies** link. Yes, just a click on the apply button have made it easy.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/comp1.JPG)
 
+> Student can add/edit the individual's details at anytime by accessing **Academics** and updated information will be accessed by any company for which the student has applied.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/stu1.JPG)
 
-As Kanye West said:
+> Student can check the status of his application in **Applications** section.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/apply.JPG)
+
+> Student can check out **Announcement** section to be up to date about the onging placement cell activities and to act accourdingly.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/ann1.JPG)
+
+#### Admin's view
+> Admin can add/edit company details in **Companies** section.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/compEdit.JPG)
+
+> Admin can view and update the results of applicants, and it will be updated in student's portal in real time.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/view_app.JPG)
+
+> Admin can analyse the response and results of each company, even the performance of students. To make the understanding ease, different graphs are available to admin, as it supports him to make furthur decisions which can benifit students.
+> 
+:-------------------------:|:-------------------------:
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph2.JPG)
+
 
 > We're living the future so
 > the present is our past.
@@ -38,7 +60,7 @@ http://github.com - automatic!
    1. Item 3a
    1. Item 3b
 
-*#### Item 1
+* Item 1
 * Item 2
   * Item 2a
   * Item 2b

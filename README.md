@@ -51,9 +51,9 @@ Graph 1            |  Graph2
 :-------------------------:|:-------------------------:
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph2.JPG)
 
-
-> We're living the future so
-> the present is our past.
+### How do I run application?
+> Clone this repository. To install all the dependecies required run the following command
+`<npm install>`
 
 
 `<add element here instead.r>` 

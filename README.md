@@ -8,7 +8,7 @@
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm1.JPG)
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm3.JPG)
 
-Solarized dark             |  Solarized Ocean
+Student Login              |  Admin Login
 :-------------------------:|:-------------------------:
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login2.JPG)
 

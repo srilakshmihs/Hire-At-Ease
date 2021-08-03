@@ -52,24 +52,15 @@ Graph 1            |  Graph2
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph2.JPG)
 
 ### How do I run application?
-##npm install
-> Clone this repository using [https://github.com/srilakshmihs/Hire-At-Ease.git](https://github.com/srilakshmihs/Hire-At-Ease.git). To install all the dependecies required run the following command
-`npm install`
+## npm install
+> Clone this repository using [https://github.com/srilakshmihs/Hire-At-Ease.git](https://github.com/srilakshmihs/Hire-At-Ease.git). To install all the dependecies required run the following command `npm install`
 
+### Make sure u visit config.js file resided in config folder and edit the value of Mongo Uri.
 
-`<add element here instead.r>` 
+## npm start
+> To run the application use the command `npm start` 
 
-http://github.com - automatic!
-[GitHub](http://github.com)
+## For any furthur more queries mail us at [teamhire.ease@gmail.com]teamhire.ease@gmail.com.
 
-1. Item 1
-1. Item 2
-1. Item 3
-   1. Item 3a
-   1. Item 3b
-
-* Item 1
-* Item 2
-  * Item 2a
-  * Item 2b
+## Thank you!
 

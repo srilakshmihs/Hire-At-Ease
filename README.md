@@ -52,8 +52,9 @@ Graph 1            |  Graph2
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/graph2.JPG)
 
 ### How do I run application?
-> Clone this repository. To install all the dependecies required run the following command
-`<npm install>`
+##npm install
+> Clone this repository using [https://github.com/srilakshmihs/Hire-At-Ease.git](https://github.com/srilakshmihs/Hire-At-Ease.git). To install all the dependecies required run the following command
+`npm install`
 
 
 `<add element here instead.r>` 

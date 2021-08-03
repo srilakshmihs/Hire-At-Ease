@@ -55,12 +55,12 @@ Graph 1            |  Graph2
 ## npm install
 > Clone this repository using [https://github.com/srilakshmihs/Hire-At-Ease.git](https://github.com/srilakshmihs/Hire-At-Ease.git). To install all the dependecies required run the following command `npm install`
 
-### Make sure u visit config.js file resided in config folder and edit the value of Mongo Uri.
+### Make sure you visit config.js file resided in config folder and edit the value of Mongo Uri.
 
 ## npm start
 > To run the application use the command `npm start` 
 
-## For any furthur more queries mail us at [teamhire.ease@gmail.com]teamhire.ease@gmail.com.
+## For any furthur more queries mail us at [teamhire.ease@gmail.com](teamhire.ease@gmail.com).
 
 ## Thank you!
 

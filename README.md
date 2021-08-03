@@ -8,6 +8,10 @@
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm1.JPG)
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm3.JPG)
 
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login2.JPG)
+
 ##### Login and signup
 > This will be the login portal for users. Each type of users namely, student and admin will be having different login portals where they will have to enter their right credentials to access.
 

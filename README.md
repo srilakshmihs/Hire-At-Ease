@@ -1,21 +1,26 @@
 # Hire-At-Ease
 
-#### A real time web-based application which provides a common platform for communication between recruiters, applicants and the placement officer of a college, making hiring an easy process by managing all major placement cell activities.
+> A real time web-based application which provides a common platform for communication between recruiters, applicants and the placement officer of a college, making hiring an easy process by managing all major placement cell activities.
 
-##### Home page
+#### Home page
 > This will be the landing page for any user. User can redirect to their respective login/signup using the links provided in navbar.
 
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm1.JPG)
 ![Home Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/hm3.JPG)
 
+#### Login and signup
+> This will be the login portal for users. Each type of users namely, student and admin will be having different login portals where they will have to enter their right credentials to access.
+
 Student Login              |  Admin Login
 :-------------------------:|:-------------------------:
 ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login1.JPG)  |  ![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login2.JPG)
 
-##### Login and signup
-> This will be the login portal for users. Each type of users namely, student and admin will be having different login portals where they will have to enter their right credentials to access.
+#### Dashboard
+> This dashboard will allow the user to navigate to required page and to perform specific operations.
+![](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/dash1.JPG)
 
-![Login Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login1.JPG)![Login Page](https://github.com/srilakshmihs/Hire-At-Ease/blob/master/public/display/login2.JPG)
+
+
 As Kanye West said:
 
 > We're living the future so
@@ -33,7 +38,7 @@ http://github.com - automatic!
    1. Item 3a
    1. Item 3b
 
-* Item 1
+*#### Item 1
 * Item 2
   * Item 2a
   * Item 2b

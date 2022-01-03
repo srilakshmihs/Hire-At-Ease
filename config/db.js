@@ -11,7 +11,7 @@ const InitiateMongoServer = async () => {
     });
     console.log("Connected to DB !!");
   } catch (e) {
-    console.log("Failer to connect");
+    console.log("Failer to connect"); 
     console.log(e);
     throw e;
   }

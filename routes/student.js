@@ -3,6 +3,7 @@ const path = require('path')
 const router = express.Router()
 const Company = require('../model/Company')
 const Notification =require('../model/Notification')
+const Feedback = require('../model/Feedback')
 const { check, validationResult } = require('express-validator')
 
 const auth = require('../middleware/auth')
@@ -58,6 +59,10 @@ router.get('/videos',auth, (req, res) =>  {
   res.sendFile(path.resolve(__dirname, '../views/student/SVideos.html'))
 })
 
+router.get('/feedback',auth, (req, res) =>  {
+  res.sendFile(path.resolve(__dirname, '../views/student/Sfeedback.html'))
+})
+
 router.get('/getPreload', auth, async (req, res) => {
   try {
     const userID = req.cookies.userID
@@ -83,12 +88,8 @@ router.get('/getPreload', auth, async (req, res) => {
 
 router.get('/reclist', async (req, res) => {
   try {
-   
-
     let listComp = await Company.find() 
-
     res.json(listComp)
-    
   } catch (e) {
     res.status(400).json({
       error: true,
@@ -194,6 +195,20 @@ router.get('/applylist', auth, async (req, res) => {
   }
 })
 
+
+router.get('/getfeedback', async (req, res) => {
+  try {
+    let listFeed = await Feedback.find() 
+    res.json({result : listFeed})
+  } catch (e) {
+    res.status(400).json({
+      error: true,
+      msg: 'Could not fetch data, sorry :('
+    })
+  }
+})
+
+
 //put
 
 
@@ -252,6 +267,27 @@ router.put('/apply', auth, async (req, res) => {
       noApplicant: false,
       error: true,
       msg: 'Could not apply or you might have already applied'
+    })
+  }
+})
+
+router.post('/addFeedback', auth, async (req, res) => {
+  try {
+    const { role, companyFeedBack, feedBackText } = req.body
+    let feedback = new Feedback({
+      role,
+      companyFeedBack,
+      feedBackText
+    })
+    await feedback.save()
+    res.status(200).json({
+      error: false,
+      message: 'Data saved!'
+    })
+  } catch (e) {
+    res.status(400).json({
+      error: true,
+      message: 'Could not save data!'
     })
   }
 })

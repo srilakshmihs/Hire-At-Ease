@@ -6,7 +6,6 @@
     var phno = document.getElementById('Snum').value
     var resume = document.getElementById('Sresume').value
   
-  
     fetch('/student/', {
       method: 'POST',
       body: JSON.stringify({

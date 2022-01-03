@@ -13,7 +13,7 @@ $(document).ready(() => {
         var role = $('#roleFeedName')
         var companyFeedBack = $('#companyFeedName')
         var feedBackText = $('#feedback-text')
-        alert("Hurry" + role.val() + " " +companyFeedBack.val()+" "+ feedBackText.val());
+        // alert("Hurry" + role.val() + " " +companyFeedBack.val()+" "+ feedBackText.val());
         fetch('/student/addFeedback', {
             method: 'POST',
             body: JSON.stringify({

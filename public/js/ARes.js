@@ -50,7 +50,7 @@ $(document).ready(() => {
      
     }
   
-    const messageLoader = () => {
+    const resourceLoader = () => {
       fetch('/admin/getResList', {
         method: 'GET'
       })
@@ -58,11 +58,11 @@ $(document).ready(() => {
           return response.json()
         })
         .then(data => {
-          buildMessage(data.result.reverse())
+          buildResources(data.result.reverse())
           //   alert(data.msg)
         })
     }
   
-    messageLoader()
+    resourceLoader()
   })
   

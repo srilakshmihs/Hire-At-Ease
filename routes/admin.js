@@ -11,6 +11,7 @@ const adauth = require('../middleware/adauth')
 const Applicant = require('../model/Applicant')
 const Admin = require('../model/Admin')
 const Notification = require('../model/Notification')
+const Resources =require('../model/Resources')
 const Company = require('../model/Company')
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
@@ -49,6 +50,9 @@ router.get('/viewcandidates', adauth, (req, res) => {
 router.get('/announcements',adauth, (req, res) => {
   res.sendFile(path.resolve(__dirname,'../views/admin/AAnnouncement.html'))
 })
+router.get('/resources',adauth, (req, res) => {
+  res.sendFile(path.resolve(__dirname,'../views/admin/Aresources.html'))
+})
 
 router.get('/getMsgList', adauth,  async (req,res) =>{
   let toBeAdded;
@@ -75,6 +79,33 @@ router.get('/getMsgList', adauth,  async (req,res) =>{
     msg : "get message list is working"
   })
 })
+
+router.get('/getResList', adauth,  async (req,res) =>{
+  let toBeAdded;
+  const resourcesList = []
+  try{
+    let resources = await Resources.find()
+    resources.forEach(element => {
+      toBeAdded = {
+        topic : element.topic,
+        content : element.content,
+        
+      }
+      resourcesList.push(toBeAdded)
+    });
+  }  
+  catch(e){
+    console.log(e);
+    res.json({
+      msg : "error occured"
+    })
+  }
+  res.json({
+    result : resourcesList,
+    msg : "get resources list is working"
+  })
+})
+
 
 router.get('/candidateslist/:id', async (req, res) => {
   try {
@@ -344,6 +375,25 @@ router.post('/notifications', adauth, async (req, res) => {
       announcement
     })
     await notification.save()
+    res.status(200).json({
+      error: false,
+      message: 'Data saved!'
+    })
+  } catch (e) {
+    res.status(400).json({
+      error: true,
+      message: 'Could not save data!'
+    })
+  }
+})
+router.post('/resource', adauth, async (req, res) => {
+  try {
+    const { topic, content } = req.body
+    let resources = new Resources({
+      topic,
+      content
+    })
+    await resources.save()
     res.status(200).json({
       error: false,
       message: 'Data saved!'

@@ -47,23 +47,8 @@ $(document).ready(() => {
               </div>
             </div>` /*Change the payh*/
             
-    /*<div class="m-3">
-    <div class="row p-2" style="background-color: cadetblue;">
-        <div class="col-2">To</div>
-        <div class="col-1">:</div>
-        <div class="col-9">${msg.msgto}</div>
-    </div>
-    <div class="row p-2" style="background-color: cadetblue;">
-        <div class="col-2">Message</div>
-        <div class="col-1">:</div>
-        <div class="col-9">${msg.message}</div>
-    </div>
-        <div class="row p-2" style="background-color: cadetblue;">
-        <div class="col-2">Date</div>
-        <div class="col-1">:</div>
-        <div class="col-9">${msg.date.slice(0, 10)}</div>
-    </div>
-</div>*/
+   
+
   }
 
   const messageLoader = () => {

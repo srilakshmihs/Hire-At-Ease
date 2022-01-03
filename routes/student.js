@@ -196,9 +196,13 @@ router.get('/applylist', auth, async (req, res) => {
 })
 
 
-router.get('/getfeedback', async (req, res) => {
+router.get('/getfeedback/:id', async (req, res) => {
   try {
-    let listFeed = await Feedback.find() 
+    let compName = req.params.id;
+    console.log(req.params.id)
+    let listFeed = await Feedback.find({
+      companyFeedBack : compName
+    }) 
     res.json({result : listFeed})
   } catch (e) {
     res.status(400).json({

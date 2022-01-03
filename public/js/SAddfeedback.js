@@ -2,7 +2,7 @@ $(document).ready(() => {
     const feedbackBtn = $('#feedSubmit')
     let compArray = [
                         'CISCO', 
-                        'WESTERN DIGITAL', 
+                        'WESTERNDIGITAL', 
                         'TCS', 
                         'DELL',
                         'MERCEDES',
@@ -42,11 +42,19 @@ $(document).ready(() => {
         const navMotherDiv = $('#compList')
         compArray.forEach(element =>{
             navMotherDiv.append(buildNavTemplate(element))
+            getParticular(element);
+        })
+    }
+
+    const getParticular = (comp) =>{
+        let compBtn = $(`#${comp}`)
+        compBtn.click(() =>{
+            feedbackLoader(comp);
         })
     }
 
     const buildNavTemplate = (comp) => {
-        return `<label class="btn btn-secondary active" id="${comp}">
+        return `<label class="btn btn-secondary" id="${comp}">
                   <input type="radio" id="${comp}">${comp}
                 </label>`
     }    
@@ -54,6 +62,10 @@ $(document).ready(() => {
     const buildFeedback = (msgs) =>{
         // alert(msgs);
         const motherDiv = $('#feedbacks')
+        motherDiv.empty();
+        if(msgs.length == 0){
+            motherDiv.append(`<div class="d-flex justify-content-center"><h4>No feedbacks found at this moment</h4></div>`)
+        }
         msgs.forEach(element => { 
             // alert(element.companyFeedBack) 
             motherDiv.append(buildTemplate(element))
@@ -64,16 +76,17 @@ $(document).ready(() => {
       return  `<div class="card m-2">
                 <h5 class="card-header">${feed.role}</h5>
                 <div class="card-body">
-                <p class="card-text"> ${feed.companyFeedBack}</p>
                   <p class="card-text"> ${feed.feedBackText}</p>
                 </div>
               </div>` /*Change the payh*/
     }
   
-    const feedbackLoader = () => {
+    const feedbackLoader = (comp) => {
+        
         // alert("Trying to get feedbacks");
-      fetch('/student/getfeedback', {
-        method: 'GET'
+      fetch('/student/getfeedback/'+comp, {
+        method: 'GET',
+        // params : { 'id' : comp}
       })
         .then(response => {
           return response.json()
@@ -87,6 +100,6 @@ $(document).ready(() => {
     }
 
     buildNavBar(compArray);
-    feedbackLoader();
+    // feedbackLoader();
   })
   

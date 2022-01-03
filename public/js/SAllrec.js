@@ -34,23 +34,44 @@ $(document).ready(() => {
     const applyComp = (comp, compID, applyID) => {
       let applyBtn = $(`#${applyID}`)
       applyBtn.click(() => {
-        // alert(`You clicked a button ${comp.companyname}`)
-        fetch("/student/apply", {
-          method: 'PUT',
-          body: JSON.stringify({ compID : comp._id }),
-          headers: {
-            'content-type': 'application/json; charset = utf-8'
-          }
-        }).then((response) => {
-            return response.json();
-          }).then((data) => {
-            if (data.error) {
-              if(data.noApplicant){
-                window.location.replace('./academics')
-              }
-            }
+        // alert("You clicked on");
+        fetch('/student/getCGPA', { method: 'GET' })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          if (data.error) {
             alert(data.msg)
-          })
+            window.location.replace('/student/dashboard')
+            return
+          }
+          else{
+            let cgpa = data.cgpa;
+            if (cgpa < comp.cutoff){
+              alert("Your CGPA is less than the cutoff. You cannot register to this company")
+              return;
+            }
+            else{
+              fetch("/student/apply", {
+                method: 'PUT',
+                body: JSON.stringify({ compID : comp._id }),
+                headers: {
+                  'content-type': 'application/json; charset = utf-8'
+                }
+              }).then((response) => {
+                  return response.json();
+                }).then((data) => {
+                  if (data.error) {
+                    if(data.noApplicant){
+                      window.location.replace('./academics')
+                    }
+                  }
+                  alert(data.msg)
+                })
+            }
+            // alert("your cgpa is " + cgpa + "and company is expecting"+ comp.cutoff)
+          }
+        })
       })
     };
 

@@ -97,6 +97,33 @@ router.get('/reclist', async (req, res) => {
   }
 })
 
+router.get('/getCGPA', async (req, res) => {
+  try {
+    const userID = req.cookies.userID;
+    let applicant = await Applicant.findOne({
+      userID
+    })
+    if(!applicant){
+      res.json({
+        error : true,
+        msg : "No applicant found"
+      });
+    }
+    const cgpa = applicant.cgpa;
+    res.json({
+      error : false,
+      cgpa : cgpa,
+    });
+    
+  } catch (e) {
+    res.status(400).json({
+      error: true,
+      msg: 'Could not fetch data, sorry :('
+    });
+  }
+})
+
+
 router.get('/notifications', auth, async (req, res) => {
   let toBeAdded;
   const notificationList = []

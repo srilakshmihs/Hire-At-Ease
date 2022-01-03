@@ -2,7 +2,7 @@
 const PORT = process.env.PORT || 4000;
 
 //mongo URI
-const MONGOURI = "mongodb+srv://teammembeteammember1:r1@clusterhireease.0wu2q.mongodb.net/test?retryWrites=true&w=majority";
+const MONGOURI = "{Enter your mongo URI}"; //Make sure to add this
 
 const ADMINAUTHID = "PlacementCell";
 

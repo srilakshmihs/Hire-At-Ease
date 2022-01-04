@@ -247,6 +247,12 @@ router.put("/apply", auth, async (req, res) => {
     const userID = req.cookies.userID;
     const compID = req.body;
     const _id = compID.compID;
+    let required = await Applicant.findOne({
+      userID
+    })
+    if(required) {
+      console.log(required._id)
+    }
     try {
         let applicant = await Applicant.findOne({
             userID,
@@ -261,6 +267,36 @@ router.put("/apply", auth, async (req, res) => {
                 msg: "No applicant or company found",
             });
         }
+        let compList = await Company.find();
+        // console.log(compList);
+        compList.forEach((element)=>{
+          // console.log("=================>")
+          // console.log(element);
+          element.candidates.forEach((candidate)=>{
+            console.log("=================>")
+            console.log(candidate.candidateID);
+            if(candidate.candidateID == required._id){
+              console.log("=================================>")
+              console.log("Found an ID")
+              console.log("===================================>")
+              if(candidate.status == 'accepted'){
+                res.json({
+                  noApplicant: false,
+                  error: false,
+                  msg: `You have an offer on hand, so you could not register furthur`,
+              });
+              }
+            }
+          })
+        })
+        // console.log(userID)
+        // let required = await Applicant.findOne({
+        //   userID
+        // })
+        // if(required) {
+        //   console.log(required._id)
+        // }
+        // console.log(userID)
         const offer = applicant.offer;
 
         offer.forEach((element) => {
